@@ -180,6 +180,44 @@ function wooAdapter({ tienda, base, categoriaId, categoriaNombre }) {
   };
 }
 
+// Lima Wine: SPA React sobre plataforma IDBI. API pública de productos sin auth.
+// Todas las fichas publican USD como moneda principal; en el panel se convierte a PEN.
+function idbiWineAdapter({ tienda, base, storeSlug }) {
+  const RAICES_VINO = new Set(['Vinos', 'Espumante', 'Champagne', 'Prosecco']);
+  return async () => {
+    const url = `https://api.idbi.pe/api/v6/e-commerce/stores/${storeSlug}/products`;
+    const data = await pedir(url, 'json');
+    const arr = Array.isArray(data?.data) ? data.data : [];
+    const productos = [];
+    for (const p of arr) {
+      const sub = p.category?.name || '';
+      const padre = p.category?.parent?.name || '';
+      const raiz = padre ? p.category?.parent?.parent?.name || padre : sub;
+      if (!RAICES_VINO.has(raiz)) continue;
+      if (/(test|prueba|dummy)/i.test(p.slug || '') || /(test|prueba|dummy)/i.test(p.name || '')) continue;
+      const precioUSD = p.prices?.data?.[0]?.price;
+      const listaUSD = p.prices?.data?.[0]?.compare_to;
+      if (!(isFinite(Number(precioUSD)) && Number(precioUSD) > 0)) continue;
+      if (Number(precioUSD) < 0.5) continue;
+      const fila = armar({
+        tienda,
+        nombre: p.name,
+        marca: p.vendor || null,
+        precio: Number(precioUSD),
+        moneda: 'USD',
+        precioLista: listaUSD > precioUSD ? listaUSD : null,
+        disponible: p.is_available === true ? true : p.is_available === false ? false : null,
+        url: `${base}/products/${p.slug}`,
+        imagen: p.media?.[0]?.url || p.media?.[0]?.image || null,
+        categoria: raiz,
+      });
+      if (fila) productos.push(fila);
+    }
+    if (!productos.length) throw new Error('0 productos de vino en la API de IDBI');
+    return { productos, meta: { categoria: 'Vinos, espumantes, champagne y prosecco (excluye destilados y licores)', fuente: 'api/v6/e-commerce/stores/{slug}/products (IDBI)' } };
+  };
+}
+
 async function vinitecaPremium() {
   const mapa = new Map();
   const bloque = /<div class="tvproduct-image"><a href="[^"]+" class="thumbnail product-thumbnail"><img[^>]*?(?:data-src|src)="([^"]+)"[^>]*>[\s\S]*?tvproduct-name product-title"><a href="([^"]+)"><h6>([^<]+)<\/h6>[\s\S]*?product-price-and-shipping">([\s\S]*?)<\/div><\/div>/g;
@@ -243,6 +281,7 @@ const FUENTES = [
   { id: 'viniteca', nombre: 'La Viniteca', rol: 'competencia', url: 'https://viniteca.com.pe/', plataforma: 'PrestaShop', correr: vinitecaPremium },
   { id: 'panuts', nombre: 'Panuts', rol: 'competencia', url: 'https://panuts.com/', plataforma: 'WooCommerce', correr: wooAdapter({ tienda: 'panuts', base: 'https://panuts.com', categoriaId: 26, categoriaNombre: 'Alta Gama' }) },
   { id: 'maderomarket', nombre: 'Madero Market', rol: 'competencia', url: 'https://www.maderomarket.pe/', plataforma: 'Sitio estático', correr: maderoMarket },
+  { id: 'limawine', nombre: 'Lima Wine', rol: 'competencia', url: 'https://limawine.pe/', plataforma: 'IDBI', correr: idbiWineAdapter({ tienda: 'limawine', base: 'https://limawine.pe', storeSlug: 'lima-wine' }) },
 ];
 
 // ---------- Tipo de cambio (para la única tienda que publica en USD) ----------

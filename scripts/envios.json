@@ -70,6 +70,16 @@
       "fuente": "https://www.maderomarket.pe/servicios.html",
       "cita": "Rutas habituales de política de envío (/envios, /pages/envios, /policies/shipping-policy) devolvieron 404; la página de servicios no publica costo ni plazos.",
       "observadoEn": "2026-10-07"
+    },
+    {
+      "tienda": "limawine",
+      "nombre": "Lima Wine",
+      "costoLima": "No publicado (se calcula en el checkout)",
+      "gratisDesde": "No publicado",
+      "tiempo": "48 h hábiles estándar · máx. 24 h hábiles express (pedidos antes de 4 pm)",
+      "fuente": "https://limawine.pe/faq",
+      "cita": "Tienes dos opciones de envío, la estándar y la express. Si eliges la primera (estándar), tu pedido llegará en 48 horas (días laborales); si eliges la segunda (express), tu pedido llegará en máximo 24 horas (días laborales).",
+      "observadoEn": "2026-10-07"
     }
   ]
 }

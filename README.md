@@ -21,7 +21,7 @@ node scripts/actualizar.mjs
 git add data.json && git commit -m "Lectura diaria" && git push
 ```
 
-El script consulta 7 fuentes (VTEX, Shopify, WooCommerce, PrestaShop y HTML). Solo Wine Not Store publica en dólares; sus precios se convierten a soles con tipo de cambio vivo. El resto de tiendas (incluida Licorerías Unidas) publica en soles y no se convierte. Si una web falla, se conserva su última lectura buena marcándola como error.
+El script consulta 8 fuentes (VTEX, Shopify, WooCommerce, PrestaShop, HTML e IDBI). Wine Not Store y Lima Wine publican en dólares; sus precios se convierten a soles con tipo de cambio vivo. El resto de tiendas (incluida Licorerías Unidas) publica en soles y no se convierte. Si una web falla, se conserva su última lectura buena marcándola como error.
 
 ## Fuentes y cobertura
 
@@ -34,6 +34,7 @@ El script consulta 7 fuentes (VTEX, Shopify, WooCommerce, PrestaShop y HTML). So
 | La Viniteca | competencia | PrestaShop | premium |
 | Panuts | competencia | WooCommerce | Alta Gama |
 | Madero Market | competencia | sitio estático | Sin catálogo de precios publicado |
+| Lima Wine | competencia | IDBI (SPA) | Vinos, espumantes, champagne y prosecco (excluye destilados y licores) |
 
 Los segmentos **no son categorías equivalentes entre sí**: cada tienda define el suyo.
 

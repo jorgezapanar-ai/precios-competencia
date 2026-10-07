@@ -504,7 +504,7 @@ function renderLecturas() {
   const nAltosPropia = altos['wineconcierge'] || 0;
 
   const gratis = DATOS.envios.filter((e) => !/^No (publicado|observado)/.test(e.gratisDesde));
-  const sinCosto = DATOS.envios.filter((e) => /no (publicado|observado)|se calcula|por cotizar|no publica/i.test(e.costoLima));
+  const sinCosto = DATOS.envios.filter((e) => /no (publicado|observado)|se calcula|por cotizar|no publica/i.test(e.costoLima) && !gratis.includes(e));
 
   const items = [
     {
@@ -534,7 +534,7 @@ function renderLecturas() {
     items.push({
       h: `${DATOS.resumen.convertidosUSD} precios llegan en USD`,
       p: DATOS.resumen.convertidosUSD
-        ? `${nombreTienda('winenotstore')} publica en dólares; esos ${DATOS.resumen.convertidosUSD} precios se convierten a soles con tasa ${DATOS.fx.usdAPen.toFixed(4)} (${DATOS.fx.fuente}, obtenida el ${fFechaCorta(DATOS.fx.obtenidoEn)}). El precio publicado en su web queda visible en la columna “Publicado”. El tipo de cambio varía: una conversión es una estimación del panel, no un precio de la tienda.`
+        ? `${[...new Set(DATOS.productos.filter(p=>p.convertido).map(p=>p.tienda))].map(i=>nombreTienda(i)).join(', ')} publican en dólares; esos ${DATOS.resumen.convertidosUSD} precios se convierten a soles con tasa ${DATOS.fx.usdAPen.toFixed(4)} (${DATOS.fx.fuente}, obtenida el ${fFechaCorta(DATOS.fx.obtenidoEn)}). El precio publicado en su web queda visible en la columna “Publicado”. El tipo de cambio varía: una conversión es una estimación del panel, no un precio de la tienda.`
         : (DATOS.fx.usdAPen ? `Este corte no incluyó precios en dólares; la tasa de referencia quedó en ${DATOS.fx.usdAPen.toFixed(4)} (${DATOS.fx.fuente}).` : 'Este corte no incluyó precios en dólares.'),
     });
   }
@@ -560,7 +560,7 @@ function renderMetodologia() {
       </div></li>`;
   }).join('');
   $('#dlg-fx').innerHTML = DATOS.fx.ok
-    ? `Tipo de cambio aplicado: <b>1 USD = ${DATOS.fx.usdAPen} PEN</b>, fuente ${escapeHtml(DATOS.fx.fuente)}, obtenido el ${fFecha(DATOS.fx.obtenidoEn)}. Solo se usa para la tienda que publica en USD; el precio original en dólares permanece en la tabla.`
+    ? `Tipo de cambio aplicado: <b>1 USD = ${DATOS.fx.usdAPen} PEN</b>, fuente ${escapeHtml(DATOS.fx.fuente)}, obtenido el ${fFecha(DATOS.fx.obtenidoEn)}. Se usa para las tiendas que publican en USD (${[...new Set(DATOS.productos.filter(p=>p.convertido).map(p=>p.tienda))].map(i=>nombreTienda(i)).join(', ')}); el precio original en dólares permanece en la tabla.`
     : (DATOS.fx.usdAPen
       ? `Sin tipo de cambio nuevo (${escapeHtml(DATOS.fx.advertencia || '')}). Se mantiene la última tasa conocida: 1 USD = ${DATOS.fx.usdAPen} PEN.`
       : `No hay tipo de cambio disponible (${escapeHtml(DATOS.fx.advertencia || '')}); los precios en USD quedan sin convertir y se excluyen de los cálculos en soles.`);
@@ -568,7 +568,8 @@ function renderMetodologia() {
   const limitaciones = [
     '<b>Madero Market</b> no publica precios en su web (su portada no contiene montos en soles): la fuente se lee y se reporta como “sin catálogo de precios”, con 0 productos.',
     '<b>La Viniteca</b> no expone API pública: sus precios se leen del HTML de la categoría premium y la disponibilidad no aparece en el listado (se muestra “no publicado”).',
-    '<b>Segmento premium según cada tienda:</b> Wine Concierge (vinos y espumantes, excluye destilados), Wine Not Store (todo el catálogo de vino), Perufarma (VINOS PREMIUM), Licorerías Unidas (vino de lujo), La Viniteca (premium), Panuts (Alta Gama). No son categorías equivalentes entre sí.',
+    '<b>Segmento premium según cada tienda:</b> Wine Concierge (vinos y espumantes, excluye destilados), Wine Not Store (todo el catálogo de vino), Perufarma (VINOS PREMIUM), Licorerías Unidas (vino de lujo), La Viniteca (premium), Panuts (Alta Gama), Lima Wine (vinos, espumantes, champagne y prosecco, excluye destilados y licores). No son categorías equivalentes entre sí.',
+    '<b>Lima Wine</b> publica su catálogo en dólares y sin fotografías por ficha; además su web exige confirmar mayoría de edad antes de navegar y no expone stock: toda su oferta aparece “disponible”. Su catálogo (más de 4.000 vinos de añada) es sustancialmente mayor que el de las otras tiendas, por lo que domina los agregados globales.',
     'Las lecturas son instantáneos diarios: precio, stock y promociones pueden cambiar varias veces al día en la web de origen.',
     'La política de envío se transcribe de una página pública y solo se revalida su disponibilidad; no se cotiza el checkout, donde algunas tiendas calculan el costo final.',
     'No se emparejan productos idénticos entre tiendas: las comparaciones son a nivel de catálogo, no de botella contra botella.',
