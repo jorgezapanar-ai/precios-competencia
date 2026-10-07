@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231d1d1b'/%3E%3Cpath d='M10 6h12l-1 8a5 5 0 0 1-10 0z' fill='%23bc9e68'/%3E%3Crect x='15' y='18' width='2' height='7' fill='%23bc9e68'/%3E%3Crect x='11' y='25' width='10' height='2' fill='%23bc9e68'/%3E%3C/svg%3E">
+<title>Precios de competencia · Vinos premium Lima · Wine Concierge</title>
+<style>
+:root{--ink:#1d1d1b;--gold:#8a6e3f;--gold-deep:#755935;--paper:#f5f1e9;--cream:#ebe4d8;--line:#d5ccbd;--muted:#70695f;--ribbon:#8d7047;--error:#993e37;--ok:#3f6b4a;--warn:#8a5a1f}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{height:92px;background:var(--ink);padding:0 6vw;display:flex;align-items:center;justify-content:space-between;color:#cab993;position:sticky;top:0;z-index:5}
+header img{width:215px}
+header button{color:#cab993!important;background:none;border:0;font:13px inherit;cursor:pointer;text-decoration:underline;text-underline-offset:5px}
+.demo-ribbon{background:var(--ribbon);color:#fff;padding:9px 6vw;text-align:center;font-size:11px;letter-spacing:.08em}
+main{max-width:1160px;margin:auto;padding:72px 34px}
+.eyebrow{color:var(--gold-deep);text-transform:uppercase;letter-spacing:.18em;font-size:10px;font-weight:600}
+h1,h2,h3{font-family:Georgia,serif;font-weight:400;line-height:1.08;letter-spacing:-.035em;margin:0}
+h1{font-size:56px;max-width:860px;margin:15px 0 24px}
+h1 em{color:var(--gold);font-weight:400}
+h2{font-size:38px;margin:13px 0 8px}
+.intro{font:19px/1.6 Georgia,serif;color:#5e584f;max-width:760px}
+.meta-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.chip{background:var(--cream);border:1px solid var(--line);padding:8px 13px;font-size:12px;color:#4c463d}
+.chip b{color:var(--ink)}
+section{margin-top:64px}
+.grid-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.panel{background:#fbf9f4;border:1px solid var(--line);padding:22px;min-width:0}
+.panel .k-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.panel .k-value{font:34px Georgia,serif;margin:8px 0 4px;letter-spacing:-.03em;word-break:break-word}
+.panel .k-note{font-size:12px;color:var(--muted);line-height:1.45}
+.panel.error-panel{border-left:3px solid var(--error)}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.section-head p{margin:0;max-width:620px;font-size:14px;color:var(--muted)}
+.note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.5}
+/* barras de rango */
+.range-list{margin-top:26px;border-top:1px solid var(--line)}
+.range-row{display:grid;grid-template-columns:170px minmax(0,1fr) 250px;gap:18px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}
+.range-name{font-size:13px;font-weight:600}
+.range-name .rol{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-deep);font-weight:600}
+.range-track{position:relative;height:26px;background:var(--cream);border:1px solid var(--line);min-width:0}
+.range-fill{position:absolute;top:0;bottom:0;background:#c9b48d}
+.range-fill.propia{background:var(--ink)}
+.range-median{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--error)}
+.range-vals{font-size:12px;color:#4c463d;text-align:right;font-variant-numeric:tabular-nums}
+.range-vals b{font-family:Georgia,serif;font-size:15px;color:var(--ink)}
+/* tramos */
+.tramo-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px;font-size:12px;color:#4c463d}
+.tramo-legend span{display:flex;align-items:center;gap:7px}
+.sw{width:13px;height:13px;border:1px solid var(--line);display:inline-block}
+.tramo-row{display:grid;grid-template-columns:170px minmax(0,1fr);gap:18px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
+.tramo-bar{display:flex;height:30px;border:1px solid var(--line);overflow:hidden;min-width:0}
+.tramo-seg{display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;min-width:0;overflow:hidden;white-space:nowrap}
+/* tablas */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);background:#fbf9f4;margin-top:22px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+caption{text-align:left;padding:0;font-size:0;height:0;overflow:hidden}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--cream);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#4c463d;white-space:nowrap;position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+a{color:var(--gold-deep)}
+.badge{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:3px 8px;border:1px solid var(--line);background:var(--cream);color:#4c463d}
+.badge.ok{border-color:#9dbfa7;background:#e7f0ea;color:var(--ok)}
+.badge.err{border-color:#d8a9a4;background:#f7e8e6;color:var(--error)}
+.badge.warn{border-color:#dcc39a;background:#f6eddd;color:var(--warn)}
+/* catálogo */
+.controles{display:grid;grid-template-columns:minmax(220px,1.6fr) repeat(3,minmax(140px,1fr)) auto;gap:14px;margin-top:26px;align-items:end}
+.campo label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}
+.campo input,.campo select{width:100%;font:15px inherit;padding:11px 12px;border:1px solid #c9bfaf;background:#fffdf9;color:var(--ink)}
+.campo.check{display:flex;align-items:center;gap:9px;padding-bottom:11px}
+.campo.check label{margin:0;font-size:13px;text-transform:none;letter-spacing:0;color:var(--ink)}
+.campo.check input{width:auto;accent-color:var(--gold)}
+.button{border:1px solid var(--ink);background:var(--ink);color:#fff;padding:13px 19px;cursor:pointer;font:13px inherit;text-decoration:none;display:inline-block}
+.button:hover{background:#433e37}
+.button.secundario{background:transparent;color:var(--ink)}
+.button.secundario:hover{background:var(--cream)}
+.acciones{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.conteo{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.thumb{width:44px;height:44px;object-fit:contain;background:var(--cream);border:1px solid var(--line);mix-blend-mode:multiply;display:block}
+.prod{display:flex;gap:12px;align-items:center;min-width:230px}
+.prod .p-nombre{font-weight:600;line-height:1.35}
+.prod .p-marca{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.precio-conv{display:block;font-size:10px;color:var(--muted);letter-spacing:.04em}
+/* lecturas */
+.lecturas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:24px}
+.lectura{background:#fbf9f4;border:1px solid var(--line);border-top:3px solid var(--gold);padding:22px}
+.lectura h3{font-size:21px;margin-bottom:10px;line-height:1.25}
+.lectura p{margin:0;font-size:14px;color:#4c463d}
+.lectura .calc{display:block;margin-top:14px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-deep)}
+footer{max-width:1160px;margin:auto;border-top:1px solid var(--line);padding:30px 34px 50px;color:var(--muted);font-size:11px}
+footer strong{color:var(--ink)}
+dialog{width:min(880px,calc(100% - 34px));max-height:86vh;border:0;padding:0;background:#f8f5ef;box-shadow:0 24px 90px #0005;color:var(--ink)}
+dialog::backdrop{background:#181713aa}
+.dialog-inner{padding:32px;overflow:auto;max-height:86vh}
+.dialog-inner h2{font-size:32px;margin-bottom:6px}
+.dialog-inner h3{font-size:19px;margin:26px 0 8px}
+.dialog-inner p,.dialog-inner li{font-size:14px;color:#4c463d}
+.dialog-actions{display:flex;justify-content:flex-end;margin-top:22px}
+ul.fuentes{list-style:none;padding:0;margin:0}
+ul.fuentes li{border-bottom:1px solid var(--line);padding:12px 0;font-size:13px}
+ul.fuentes li b{font-family:Georgia,serif;font-size:15px}
+.estados span{display:inline-block;margin-right:8px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cargando{padding:60px 0;text-align:center;color:var(--muted);font:19px Georgia,serif}
+:focus-visible{outline:3px solid #a68b5d;outline-offset:3px}
+@media(max-width:900px){
+  .range-row{grid-template-columns:1fr;gap:8px}
+  .range-vals{text-align:left}
+  .tramo-row{grid-template-columns:1fr;gap:8px}
+  .controles{grid-template-columns:1fr 1fr}
+}
+@media(max-width:780px){
+  header{height:76px;padding:0 22px}
+  header img{width:170px}
+  main{padding:43px 22px}
+  h1{font-size:38px}
+  h2{font-size:30px}
+  .intro{font-size:17px}
+  section{margin-top:48px}
+  .controles{grid-template-columns:1fr}
+  .demo-ribbon{font-size:10px;padding:8px 22px}
+  .table-wrap{border:0;background:transparent;overflow:visible}
+  table,thead,tbody,tr,td{display:block}
+  thead{display:none}
+  tbody tr{background:#fbf9f4;border:1px solid var(--line);margin-bottom:14px;padding:8px 4px}
+  td{border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:16px;text-align:right;overflow-wrap:anywhere}
+  td:last-child{border-bottom:0}
+  td::before{content:attr(data-label);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:left;flex:0 0 38%}
+  td .prod{justify-content:flex-end;text-align:left;min-width:0}
+  td .prod .p-nombre,td .prod .p-marca{overflow-wrap:anywhere}
+  td.num{text-align:right}
+}
+</style>
+</head>
+<body>
+<header>
+  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjA2IiBoZWlnaHQ9IjIwIiB2aWV3Qm94PSIwIDAgMjA2IDIwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMjAwM184MDEpIj4KPHBhdGggZD0iTTIwLjg4MSAxMC43MjlDMjAuMzY3MSAxMi40MDUzIDE5LjgyNTcgMTQuMTg5OCAxOS4zMzkzIDE1Ljg2NDNIMTkuMjg5N0MxOC43NzU4IDE0LjEzNDggMTguMjYxOSAxMi40ODYgMTcuNzIwNSAxMC43NTY1TDE0LjM4OTMgMC4xNjE0MDdIMTIuNDk4OUw5LjE3MTM0IDEwLjcyOUM4LjYyOTkxIDEyLjQ2MDQgOC4wOTAzMSAxNC4xODk4IDcuNjAyMSAxNS44NjQzSDcuNTQzMzdDNy4wNTcgMTQuMTg5OCA2LjUxNTU2IDEyLjQwNTMgNi4wMDE2NiAxMC43NTY1TDIuNzI5MTkgMC4xNjE0MDdIMEw2LjA4NjA4IDE5LjczMDRIOC44NzIxN0wxMS45ODMxIDkuODEwMTlDMTIuNDY5NSA4LjI2OTYxIDEyLjkzMDIgNi43MjkwNCAxMy4zNjE1IDUuMjQzNDhIMTMuNDE2NUMxMy44NDk3IDYuNzI5MDQgMTQuMzA5MiA4LjI0MjcxIDE0Ljc5NDkgOS43ODQ1MUwxNy45MzM0IDE5LjczMDRIMjAuNjY0NEwyNi43NTA1IDAuMTYxNDA3SDI0LjE1MzVMMjAuODgxIDEwLjcyOVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0zMC41MDkzIDAuMTYxNDA3SDI3LjkzOThWMTkuNzMwNEgzMC41MDkzVjAuMTYxNDA3WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTQ3LjU3ODMgMTAuMDAwOUM0Ny41NzgzIDExLjg5MTggNDcuNjA0IDEzLjg2NTIgNDcuNjMxNSAxNS41OTQ3SDQ3LjU3ODNDNDYuNDc3MSAxNC4wNTQxIDQ1LjMzMzYgMTIuNTEzNSA0NC4xOTc1IDExLjAyNjFMMzYuMDAwOCAwLjE2MTQwN0gzMy41NjcxVjE5LjczMDRIMzYuMDU1OFY5Ljg5MjcyQzM2LjA1NTggOC4wMDAwMSAzNi4wMjgzIDYuMDI2NiAzNi4wMDA4IDQuMjk3MTJIMzYuMDU1OEMzNy4xNTcgNS44Mzc3IDM4LjMwMDUgNy4zNzgyOCAzOS40MzY2IDguODY1NjdMNDcuNjMxNSAxOS43MzA0SDUwLjA2N1YwLjE2MTQwN0g0Ny41NzgzVjEwLjAwMDlaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNTUuNjkyNCAxMC43MDM0SDYzLjM0NTlWOC40MDUzM0g1NS42OTI0VjIuNDg2OTVINjQuNDI4OFYwLjE2MTQwN0g1My4xMjI5VjE5LjczMDRINjQuNjcxMVYxNy40MDY3SDU1LjY5MjRWMTAuNzAzNFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik02OC4zODAzIDEwLjAwMDlDNjguMzgwMyA0LjY0OTIzIDcyLjE5MjQgMC41OTQyMDYgNzcuNjMwNiAwLjU5NDIwNkM3OS41NzI2IDAuNTc3OTgzIDgxLjQ3MTggMS4xNjM2MiA4My4wNjcgMi4yNzA1VjEuNTM2OUM4MS40MzM3IDAuNTI3Nzk4IDc5LjU1MDkgLTAuMDA1NzQ3OTMgNzcuNjMwNiAtMC4wMDM2ODY2OEM3MS45NDEgLTAuMDAzNjg2NjggNjcuNzU4MiA0LjI5MzQzIDY3Ljc1ODIgOS45OTcyNEM2Ny43NTgyIDE1LjcwMSA3MS45NTAxIDE5Ljk5NjMgNzcuNjMwNiAxOS45OTYzQzc5LjY0NTMgMjAuMDIzOCA4MS42MTk0IDE5LjQyOTQgODMuMjgzNSAxOC4yOTQzVjE3LjU5MTlDODEuNjQzOSAxOC43ODg3IDc5LjY2MSAxOS40MjM3IDc3LjYzMDYgMTkuNDAyMUM3Mi4xOTI0IDE5LjQwNTggNjguMzgwMyAxNS4zNTk5IDY4LjM4MDMgMTAuMDAwOVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik05My45Mzk3IDBDODguMzY3NSAwIDg0LjE3NTUgNC40MzI4MyA4NC4xNzU1IDEwLjAwMDlDODQuMTc1NSAxNS41NjkgODguMzY3NSAyMCA5My45Mzk3IDIwQzk5LjUxMTkgMjAgMTAzLjcwNCAxNS41NjcyIDEwMy43MDQgMTAuMDAwOUMxMDMuNzA0IDQuNDM0NjcgOTkuNTExOSAwIDkzLjkzOTcgMFpNOTMuOTM5NyAxOS40MDU4Qzg4LjY2NDggMTkuNDA1OCA4NC43OTc3IDE1LjI0NDQgODQuNzk3NyAxMC4wMDA5Qzg0Ljc5NzcgNC43NTc0NiA4OC42NjQ4IDAuNTk0MjIxIDkzLjkzOTcgMC41OTQyMjFDOTkuMjE0NSAwLjU5NDIyMSAxMDMuMDgyIDQuNzU3NDYgMTAzLjA4MiAxMC4wMDA5QzEwMy4wODIgMTUuMjQ0NCA5OS4yMTQ1IDE5LjQwNTggOTMuOTM5NyAxOS40MDU4WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTEyMS4wNDEgMTguNzAzM0gxMjEuMDE1TDEwNy4xOTMgMC4yMTY0SDEwNi41NzFWMTkuNzgzNkgxMDcuMTkzVjEuMjk2NjRIMTA3LjIyTDEyMS4wNDEgMTkuNzgzNkgxMjEuNjYzVjAuMjE2NEgxMjEuMDQxVjE4LjcwMzNaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTI1LjEwMSAxMC4wMDA5QzEyNS4xMDEgNC42NDkyNCAxMjguOTEzIDAuNTk0MjA4IDEzNC4zNTEgMC41OTQyMDhDMTM2LjI5MyAwLjU3Nzk4NSAxMzguMTkyIDEuMTYzNjIgMTM5Ljc4NyAyLjI3MDUxVjEuNTM2OUMxMzguMTU0IDAuNTI3NTMgMTM2LjI3MSAtMC4wMDYwMzc5NyAxMzQuMzUxIC0wLjAwMzY4NDg4QzEyOC42NjEgLTAuMDAzNjg0ODggMTI0LjQ3OCA0LjI5MzQzIDEyNC40NzggOS45OTcyNEMxMjQuNDc4IDE1LjcwMSAxMjguNjcgMTkuOTk2MyAxMzQuMzUxIDE5Ljk5NjNDMTM2LjM2NiAyMC4wMjM4IDEzOC4zNCAxOS40Mjk1IDE0MC4wMDQgMTguMjk0M1YxNy41OTE5QzEzOC4zNjQgMTguNzg4NyAxMzYuMzgxIDE5LjQyMzcgMTM0LjM1MSAxOS40MDIxQzEyOC45MTMgMTkuNDA1OCAxMjUuMTAxIDE1LjM1OTkgMTI1LjEwMSAxMC4wMDA5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTE0My41NzQgMC4yMTY0SDE0Mi45NTFWMTkuNzg1NEgxNDMuNTc0VjAuMjE2NFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xNDguMjc5IDkuOTE4MzdIMTU2Ljk2M1Y5LjMyNDE1SDE0OC4yNzlWMC44MTA2MjNIMTU4LjAxNlYwLjIxNjRIMTQ3LjY1N1YxOS43ODM2SDE1OC4yMzNWMTkuMTg5M0gxNDguMjc5VjkuOTE4MzdaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTczLjY0NCA1LjQ1NjIyQzE3My42NDQgMy43MjY3NCAxNzIuODg2IDIuMjExODQgMTcxLjYxNCAxLjMyMDUxQzE3MC4zNDIgMC40MjkxNzEgMTY4LjkxMSAwLjIyMDA5MyAxNjYuOTYyIDAuMjIwMDkzSDE2MS4zMDlWMTkuNzgzNkgxNjEuOTMxVjEwLjY3NThIMTY3LjQyMkwxNzMuOTY3IDE5Ljc4MzZIMTc0LjcyNUwxNjguMTE4IDEwLjYxMzVDMTcxLjQ0MiAxMC41MTI2IDE3My42NDQgOC40ODYwMiAxNzMuNjQ0IDUuNDU2MjJaTTE2Ny4xMjUgMTAuMDc4SDE2MS45MzFWMC44MTA2NDJIMTY2LjkzNkMxNjguODAzIDAuODEwNjQyIDE2OS45OTIgMC45NzIwNDIgMTcxLjE1NyAxLjc1N0MxNzIuMzIzIDIuNTQxOTYgMTczLjAyNCAzLjkxOTMxIDE3My4wMjQgNS40NTk4OUMxNzMuMDI0IDcuMDAwNDcgMTcyLjMxOSA4LjM3NzgyIDE3MS4xNTcgOS4xNjI3OEMxNjkuOTk2IDkuOTQ3NzQgMTY4Ljc4MiAxMC4wODE2IDE2Ny4xMzIgMTAuMDgxNkwxNjcuMTI1IDEwLjA3OFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xODUuODQ5IDExLjQ1OUgxOTEuNDQ3VjE3LjgxMkMxODkuOTMxIDE4Ljc4NCAxODcuOTMxIDE5LjM3ODMgMTg1Ljc5NCAxOS4zNzgzQzE4MC4wMzMgMTkuMzc4MyAxNzYuMjczIDE1LjI3MDEgMTc2LjI3MyA5Ljk3MzQxQzE3Ni4yNzMgNC42NzY3NSAxODAuMDA2IDAuNTk0MjIgMTg1Ljg0OCAwLjU5NDIyQzE4Ny44NjIgMC41ODQ0OTYgMTg5LjgzOSAxLjEzNzEyIDE5MS41NTYgMi4xODk4MlYxLjUxMzA3QzE4OS44MzQgMC41MDM2NTQgMTg3Ljg3MSAtMC4wMTkzMzg4IDE4NS44NzUgLTEuMzU0NTVlLTA2QzE3OS42MjYgLTEuMzU0NTVlLTA2IDE3NS42NSA0LjQwMTY1IDE3NS42NSA5Ljk3MzQxQzE3NS42NSAxNS41OTQ3IDE3OS43MDggMjAgMTg1Ljc2NyAyMEMxODguMTczIDIwIDE5MC40MiAxOS4yNjY0IDE5Mi4wNyAxOC4xMzQ4VjEwLjg2NDdIMTg1Ljg0OEwxODUuODQ5IDExLjQ1OVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xOTYuMDQ3IDE5LjE4OTNWOS45MTgzN0gyMDQuNzI4VjkuMzI0MTVIMTk2LjA0N1YwLjgxMDYyM0gyMDUuNzgzVjAuMjE2NEgxOTUuNDI1VjE5Ljc4MzZIMjA2VjE5LjE4OTNIMTk2LjA0N1oiIGZpbGw9IndoaXRlIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMjAwM184MDEiPgo8cmVjdCB3aWR0aD0iMjA2IiBoZWlnaHQ9IjIwIiBmaWxsPSJ3aGl0ZSIvPgo8L2NsaXBQYXRoPgo8L2RlZnM+Cjwvc3ZnPgo=" alt="Wine Concierge">
+  <button type="button" id="btn-metodologia-top">Metodología y fuentes</button>
+</header>
+<div class="demo-ribbon">DATOS PÚBLICOS DE LAS TIENDAS · LECTURA DIARIA AUTOMÁTICA · SOLO PARA USO INTERNO</div>
+
+<main>
+  <p class="eyebrow">Competencia · Vinos premium · Lima</p>
+  <h1>¿A qué precios está vendiendo <em>la competencia</em>?</h1>
+  <p class="intro">Panel con los productos y precios que cada tienda publica hoy en su web, con la política de envío en Lima. La lectura es automática: cada día se vuelve a consultar cada sitio y aquí aparece lo que sus páginas muestran. No se captura a mano, no se estima ni se completa con información de terceros.</p>
+  <div class="meta-strip" id="meta-strip" aria-live="polite"><span class="chip">Cargando datos…</span></div>
+
+  <section id="kpis" aria-labelledby="h-kpis">
+    <p class="eyebrow">Puntos principales a comparar</p>
+    <h2 id="h-kpis">El corte de hoy en seis cifras</h2>
+    <div class="grid-kpis" id="kpis-grid"></div>
+  </section>
+
+  <section id="rangos" aria-labelledby="h-rangos">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Nivel de precios</p>
+        <h2 id="h-rangos">Rango de precio por tienda</h2>
+      </div>
+      <p>Barra: precio mínimo al máximo publicado. La línea roja marca la mediana. El eje se limita al percentil 95 del conjunto para que las botellas excepcionales no aplasten la escala; los valores por encima se marcan con ▶.</p>
+    </div>
+    <div class="range-list" id="range-list"></div>
+    <p class="note" id="range-note"></p>
+  </section>
+
+  <section id="tramos" aria-labelledby="h-tramos">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Estructura del catálogo</p>
+        <h2 id="h-tramos">Distribución por tramos de precio</h2>
+      </div>
+      <p>Participación de cada tramo dentro del catálogo leído de cada tienda. Permite ver dónde compite cada una: volumen de entrada vs. segmento alto.</p>
+    </div>
+    <div class="tramo-legend" id="tramo-legend"></div>
+    <div id="tramo-list" style="margin-top:14px;border-top:1px solid var(--line)"></div>
+    <p class="note">Tramos propuestos para este panel (no son una categoría oficial de las tiendas): &lt; S/ 100 · S/ 100–299 · S/ 300–599 · S/ 600–999 · S/ 1,000 o más.</p>
+  </section>
+
+  <section id="envios" aria-labelledby="h-envios">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Logística</p>
+        <h2 id="h-envios">Envío y entrega en Lima</h2>
+      </div>
+      <p>Campos transcritos de la política pública de cada tienda (enlace en la columna Fuente) y revalidados en cada lectura diaria: si la página deja de responder o su contenido cambia, se marca en la tabla.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <caption>Comparativo de políticas de envío en Lima por tienda</caption>
+        <thead>
+          <tr>
+            <th scope="col">Tienda</th>
+            <th scope="col">Costo en Lima</th>
+            <th scope="col">Envío gratis desde</th>
+            <th scope="col">Tiempo de entrega</th>
+            <th scope="col">Fuente (verificada hoy)</th>
+          </tr>
+        </thead>
+        <tbody id="envios-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="envios-note"></p>
+  </section>
+
+  <section id="catalogo" aria-labelledby="h-catalogo">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Detalle</p>
+        <h2 id="h-catalogo">Catálogo comparado</h2>
+      </div>
+      <p>Cada fila es un producto tal como lo publica su tienda, con el enlace a la ficha de origen para verificarlo. La columna “Publicado” muestra el precio tal cual aparece en la web (incluye la moneda original si no es soles).</p>
+    </div>
+
+    <div class="controles">
+      <div class="campo">
+        <label for="f-buscar">Buscar producto o marca</label>
+        <input type="search" id="f-buscar" placeholder="Ej. Catena, malbec, champagne…" autocomplete="off">
+      </div>
+      <div class="campo">
+        <label for="f-tienda">Tienda</label>
+        <select id="f-tienda"></select>
+      </div>
+      <div class="campo">
+        <label for="f-tramo">Tramo de precio</label>
+        <select id="f-tramo">
+          <option value="todas">Todos</option>
+          <option value="0-100">&lt; S/ 100</option>
+          <option value="100-300">S/ 100 – 299</option>
+          <option value="300-600">S/ 300 – 599</option>
+          <option value="600-1000">S/ 600 – 999</option>
+          <option value="1000-max">S/ 1,000 o más</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="f-orden">Ordenar por</label>
+        <select id="f-orden">
+          <option value="precio-desc">Precio: mayor a menor</option>
+          <option value="precio-asc">Precio: menor a mayor</option>
+          <option value="tienda">Tienda (A–Z)</option>
+          <option value="nombre">Nombre (A–Z)</option>
+        </select>
+      </div>
+      <div class="campo check">
+        <input type="checkbox" id="f-disponible">
+        <label for="f-disponible">Solo disponibles</label>
+      </div>
+    </div>
+
+    <div class="acciones">
+      <span class="conteo" id="conteo" aria-live="polite">—</span>
+      <button type="button" class="button secundario" id="btn-mas">Cargar más</button>
+      <button type="button" class="button secundario" id="btn-csv">Descargar CSV</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <caption>Catálogo de productos y precios de las tiendas analizadas</caption>
+        <thead>
+          <tr>
+            <th scope="col">Tienda</th>
+            <th scope="col">Producto</th>
+            <th scope="col" class="num">Precio (S/)</th>
+            <th scope="col" class="num">Publicado</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Fuente</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body"></tbody>
+      </table>
+    </div>
+    <div class="acciones" id="acciones-fin"></div>
+  </section>
+
+  <section id="lecturas" aria-labelledby="h-lecturas">
+    <p class="eyebrow">Interpretación</p>
+    <h2 id="h-lecturas">Lecturas del corte actual</h2>
+    <div class="lecturas" id="lecturas-grid"></div>
+  </section>
+</main>
+
+<footer>
+  <strong>Wine Concierge · Panel interno de precios de competencia.</strong>
+  <p>Los precios, promociones y disponibilidad son los que cada tienda publica en su web al momento de la lectura y pueden cambiar sin aviso: verifique la ficha de origen antes de citar una cifra. Las diferencias entre tiendas no implican que se trate del mismo producto, año o formato. Los tramos de precio, las medianas y los porcentajes de este panel son cálculos sobre los datos observados, no información publicada por las tiendas. Uso interno; requiere aprobación antes de compartirse fuera del equipo.</p>
+  <p style="margin-top:12px"><button type="button" class="button secundario" id="btn-metodologia">Ver metodología, fuentes y limitaciones</button></p>
+</footer>
+
+<dialog id="dlg-metodologia" aria-labelledby="dlg-title">
+  <div class="dialog-inner">
+    <p class="eyebrow">Trazabilidad</p>
+    <h2 id="dlg-title">Metodología y fuentes</h2>
+    <p id="dlg-leido">—</p>
+
+    <h3>Fuentes leídas</h3>
+    <ul class="fuentes" id="dlg-fuentes"></ul>
+
+    <h3>Moneda y conversiones</h3>
+    <p id="dlg-fx">—</p>
+
+    <h3>Qué es dato observado y qué es cálculo</h3>
+    <ul>
+      <li><b>Observado:</b> nombre, precio, precio tachado, disponibilidad, URL e imagen tal como aparecen en la página pública de cada tienda, y los textos de la política de envío (con su enlace).</li>
+      <li><b>Cálculo propio del panel:</b> medianas, rangos, tramos, participaciones y diferencias porcentuales. Están derivados de los precios observados en la lectura y no son información publicada por las tiendas.</li>
+      <li><b>No se hace:</b> predicción, benchmarks externos, ajuste por año de cosecha, tamaño de botella ni equivalencias entre productos de marcas distintas.</li>
+    </ul>
+
+    <h3>Limitaciones conocidas</h3>
+    <ul id="dlg-limitaciones"></ul>
+
+    <div class="dialog-actions">
+      <button type="button" class="button" id="btn-cerrar">Cerrar</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const FORMATO = new Intl.NumberFormat('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const sSoles = (n) => 'S/ ' + FORMATO.format(n);
+const sSolesCorto = (n) => (n >= 1000 ? 'S/ ' + new Intl.NumberFormat('es-PE', { maximumFractionDigits: 0 }).format(n) : sSoles(n));
+const norm = (s) => (s || '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+const fFecha = (iso) => new Date(iso).toLocaleString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+const fFechaCorta = (iso) => new Date(iso).toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'short', year: 'numeric' });
+
+const TRAMOS = [
+  { id: '0-100', etq: '< S/ 100', min: 0, max: 100, color: '#8d7047' },
+  { id: '100-300', etq: 'S/ 100–299', min: 100, max: 300, color: '#a98b5e' },
+  { id: '300-600', etq: 'S/ 300–599', min: 300, max: 600, color: '#c2a678' },
+  { id: '600-1000', etq: 'S/ 600–999', min: 600, max: 1000, color: '#5c564c' },
+  { id: '1000-max', etq: 'S/ 1,000 o más', min: 1000, max: Infinity, color: '#1d1d1b' },
+];
+
+let DATOS = null;
+let FILA = [];
+let VISIBLES = 50;
+const F = { q: '', tienda: 'todas', tramo: 'todas', orden: 'precio-desc', disponible: false };
+
+function mediana(arr) {
+  if (!arr.length) return null;
+  const a = [...arr].sort((x, y) => x - y);
+  const m = Math.floor(a.length / 2);
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+}
+function percentil(arr, p) {
+  if (!arr.length) return 0;
+  const a = [...arr].sort((x, y) => x - y);
+  return a[Math.min(a.length - 1, Math.max(0, Math.ceil(p * a.length) - 1))];
+}
+const nombreTienda = (id) => DATOS.fuentes.find((f) => f.id === id)?.nombre || id;
+const escapeHtml = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+async function cargar() {
+  try {
+    const r = await fetch('data.json?t=' + Date.now());
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    DATOS = await r.json();
+    if (!DATOS.productos?.length) throw new Error('el archivo no trae productos');
+    pintarTodo();
+  } catch (e) {
+    $('#meta-strip').innerHTML = '<span class="chip" style="border-color:#d8a9a4;background:#f7e8e6;color:#993e37"><b>No se pudo leer data.json.</b> ' + escapeHtml(e.message) + '. Abre el panel por un servidor web local o vuelve a intentarlo.</span>';
+    $('#kpis-grid').innerHTML = '<div class="panel error-panel"><div class="k-label">Sin datos</div><div class="k-value">—</div><div class="k-note">El archivo data.json aún no existe o no es accesible. Se genera con <code>node scripts/actualizar.mjs</code>.</div></div>';
+    $('#btn-reintentar')?.addEventListener('click', cargar);
+  }
+}
+
+function pintarTodo() {
+  renderMeta();
+  renderKpis();
+  renderRangos();
+  renderTramos();
+  renderEnvios();
+  renderLecturas();
+  renderMetodologia();
+  poblarTiendas();
+  aplicarFiltros();
+}
+
+function renderMeta() {
+  const r = DATOS.resumen;
+  const chips = [
+    `<span class="chip">Última lectura: <b>${fFecha(DATOS.generadoEn)}</b> (hora de Lima)</span>`,
+    `<span class="chip">Productos con precio: <b>${r.productos}</b></span>`,
+    `<span class="chip">Fuentes leídas: <b>${r.fuentesOk} de ${r.fuentesTotal}</b></span>`,
+    `<span class="chip">En oferta (precio publicado tachado): <b>${r.conDescuento}</b></span>`,
+  ];
+  if (r.convertidosUSD) chips.push(`<span class="chip">Convertidos de USD: <b>${r.convertidosUSD}</b> a ${DATOS.fx.usdAPen.toFixed(4)} (${fFechaCorta(DATOS.fx.obtenidoEn)})</span>`);
+  if (r.sinPrecio) chips.push(`<span class="chip" style="border-color:#dcc39a;background:#f6eddd">Sin conversión: <b>${r.sinPrecio}</b></span>`);
+  $('#meta-strip').innerHTML = chips.join('');
+}
+
+function renderKpis() {
+  const ps = DATOS.productos.filter((p) => isFinite(p.precio));
+  const precios = ps.map((p) => p.precio);
+  const med = mediana(precios);
+  const min = Math.min(...precios);
+  const max = Math.max(...precios);
+  const conDesc = ps.filter((p) => p.precioLista).length;
+  const tiendasConCat = new Set(ps.map((p) => p.tienda)).size;
+  const gratisPublicado = DATOS.envios.filter((e) => !/^No (publicado|observado)/.test(e.gratisDesde)).length;
+  const cards = [
+    { l: 'Productos con precio', v: ps.length.toLocaleString('es-PE'), n: `Catálogo leído en ${tiendasConCat} tiendas · lectura del ${fFechaCorta(DATOS.generadoEn)}` },
+    { l: 'Mediana de precios', v: sSoles(med), n: 'Valor que deja la mitad del catálogo por debajo. Cálculo propio sobre los precios observados.' },
+    { l: 'Rango mínimo – máximo', v: `${sSolesCorto(min)} – ${sSolesCorto(max)}`, n: 'Extremos de todo el catálogo leído, incluye destilados y magnums.' },
+    { l: 'Con precio publicado tachado', v: `${conDesc} · ${Math.round((conDesc / ps.length) * 100)}%`, n: 'Producto con precio anterior visible en la web (oferta declarada por la tienda).' },
+    { l: 'Fuentes leídas hoy', v: `${DATOS.resumen.fuentesOk} / ${DATOS.resumen.fuentesTotal}`, n: 'Si una web falla, se conserva su última lectura buena y se marca como error.' },
+    { l: 'Envío gratis publicado', v: `${gratisPublicado} de ${DATOS.envios.length}`, n: 'Tiendas que declaran un monto mínimo o envío incluido en su política (ver tabla de envíos).' },
+  ];
+  $('#kpis-grid').innerHTML = cards.map((c) => `<div class="panel"><div class="k-label">${c.l}</div><div class="k-value">${c.v}</div><div class="k-note">${c.n}</div></div>`).join('');
+}
+
+function renderRangos() {
+  const ps = DATOS.productos.filter((p) => isFinite(p.precio));
+  const tope = Math.max(1, percentil(ps.map((p) => p.precio), 0.95));
+  const grupos = {};
+  ps.forEach((p) => (grupos[p.tienda] ||= []).push(p.precio));
+  const filas = Object.entries(grupos).map(([tienda, vals]) => ({
+    tienda,
+    min: Math.min(...vals),
+    max: Math.max(...vals),
+    med: mediana(vals),
+    n: vals.length,
+    propia: DATOS.fuentes.find((f) => f.id === tienda)?.rol === 'propia',
+  })).sort((a, b) => b.med - a.med);
+
+  $('#range-list').innerHTML = filas.map((f) => {
+    const izq = Math.min(100, (f.min / tope) * 100);
+    const der = Math.min(100, (f.max / tope) * 100);
+    const med = Math.min(100, (f.med / tope) * 100);
+    const clip = f.max > tope;
+    return `<div class="range-row">
+      <div class="range-name">${escapeHtml(nombreTienda(f.tienda))}${f.propia ? '<span class="rol">Nuestra tienda</span>' : ''}<span class="rol" style="color:var(--muted)">${f.n} productos</span></div>
+      <div class="range-track" role="img" aria-label="${escapeHtml(nombreTienda(f.tienda))}: de ${sSoles(f.min)} a ${sSoles(f.max)}, mediana ${sSoles(f.med)}">
+        <div class="range-fill${f.propia ? ' propia' : ''}" style="left:${izq}%;width:${Math.max(1.5, der - izq)}%"></div>
+        <div class="range-median" style="left:${med}%"></div>
+      </div>
+      <div class="range-vals">${clip ? '▶ ' : ''}<b>${sSoles(f.med)}</b> mediana<br>mín ${sSolesCorto(f.min)} · máx ${sSolesCorto(f.max)}</div>
+    </div>`;
+  }).join('');
+  $('#range-note').textContent = `Eje limitado al percentil 95 del catálogo: ${sSoles(tope)}. La marca ▶ indica que el precio máximo de esa tienda supera el tope del eje.`;
+}
+
+function renderTramos() {
+  $('#tramo-legend').innerHTML = TRAMOS.map((t) => `<span><i class="sw" style="background:${t.color}"></i>${t.etq}</span>`).join('');
+  const grupos = {};
+  DATOS.productos.forEach((p) => (grupos[p.tienda] ||= []).push(p.precio));
+  const filas = Object.entries(grupos).sort((a, b) => b[1].length - a[1].length);
+  $('#tramo-list').innerHTML = filas.map(([tienda, vals]) => {
+    const segs = TRAMOS.map((t) => {
+      const n = vals.filter((v) => v >= t.min && v < t.max).length;
+      const pct = (n / vals.length) * 100;
+      if (!n) return '';
+      return `<div class="tramo-seg" style="width:${pct}%;background:${t.color}" title="${t.etq}: ${n} productos (${Math.round(pct)}%)">${pct >= 9 ? Math.round(pct) + '%' : ''}</div>`;
+    }).join('');
+    return `<div class="tramo-row"><div class="range-name">${escapeHtml(nombreTienda(tienda))}<span class="rol" style="color:var(--muted)">${vals.length} productos</span></div><div class="tramo-bar">${segs}</div></div>`;
+  }).join('');
+}
+
+function renderEnvios() {
+  $('#envios-body').innerHTML = DATOS.envios.map((e) => {
+    const estado = e.estado === 'ok'
+      ? (e.cambioDetectado ? '<span class="badge warn">Contenido cambió · revisar</span>' : '<span class="badge ok">OK</span>')
+      : `<span class="badge err">Fuente caída</span>`;
+    const fecha = e.estado === 'ok' ? fFechaCorta(e.verificadoEn) : (e.observadoEn || '—');
+    return `<tr>
+      <td data-label="Tienda"><b>${escapeHtml(e.nombre)}</b></td>
+      <td data-label="Costo en Lima">${escapeHtml(e.costoLima)}</td>
+      <td data-label="Envío gratis desde">${escapeHtml(e.gratisDesde)}</td>
+      <td data-label="Tiempo">${escapeHtml(e.tiempo)}</td>
+      <td data-label="Fuente"><a href="${e.fuente}" target="_blank" rel="noopener">${new URL(e.fuente).hostname.replace('www.', '')} ↗</a><br>${estado} <span style="font-size:11px;color:var(--muted)">verificado ${fecha}</span></td>
+    </tr>`;
+  }).join('');
+  const caidas = DATOS.envios.filter((e) => e.estado !== 'ok').length;
+  const cambios = DATOS.envios.filter((e) => e.cambioDetectado).length;
+  const partes = [`Cita textual y campos observados el ${DATOS.envios[0]?.observadoEn || '—'}; el enlace se revalida en cada lectura diaria.`];
+  if (caidas) partes.push(`${caidas} fuente(s) de política no respondieron hoy: se muestra el último texto observado.`);
+  if (cambios) partes.push(`${cambios} política(s) cambió su contenido respecto a la primera lectura: revisar manualmente antes de citar.`);
+  $('#envios-note').textContent = partes.join(' ');
+}
+
+function renderLecturas() {
+  const ps = DATOS.productos.filter((p) => isFinite(p.precio));
+  const propia = ps.filter((p) => p.tienda === 'wineconcierge');
+  const resto = ps.filter((p) => p.tienda !== 'wineconcierge');
+  const medPropia = mediana(propia.map((p) => p.precio));
+  const medResto = mediana(resto.map((p) => p.precio));
+  const dif = medPropia && medResto ? Math.round(((medPropia - medResto) / medResto) * 100) : null;
+
+  const conDesc = {};
+  ps.forEach((p) => { if (p.precioLista) conDesc[p.tienda] = (conDesc[p.tienda] || 0) + 1; });
+  const totales = {};
+  ps.forEach((p) => (totales[p.tienda] = (totales[p.tienda] || 0) + 1));
+  const topPromo = Object.entries(conDesc).map(([t, n]) => [t, n, Math.round((n / totales[t]) * 100)]).sort((a, b) => b[2] - a[2])[0];
+
+  const altos = {};
+  ps.filter((p) => p.precio >= 1000).forEach((p) => (altos[p.tienda] = (altos[p.tienda] || 0) + 1));
+  const altosTop = Object.entries(altos).sort((a, b) => b[1] - a[1]);
+  const nAltosPropia = altos['wineconcierge'] || 0;
+
+  const gratis = DATOS.envios.filter((e) => !/^No (publicado|observado)/.test(e.gratisDesde));
+  const sinCosto = DATOS.envios.filter((e) => /^No (publicado|observado)/.test(e.costoLima));
+
+  const items = [
+    {
+      h: dif == null ? 'Sin base para comparar' : (dif >= 0 ? `Nuestra mediana está ${Math.abs(dif)}% arriba` : `Nuestra mediana está ${Math.abs(dif)}% abajo`),
+      p: dif == null
+        ? 'No hay suficientes precios en la lectura de hoy para calcular la diferencia.'
+        : `Wine Concierge publica su catálogo con mediana ${sSoles(medPropia)} frente a ${sSoles(medResto)} del resto de tiendas combinadas (${ps.length - propia.length} productos). La comparación usa precios publicados; no empareja productos iguales.`,
+    },
+    {
+      h: topPromo ? `${nombreTienda(topPromo[0])} es la que más marca precio tachado` : 'Casi ningún catálogo marca precio tachado',
+      p: topPromo
+        ? `${topPromo[0] === 'wineconcierge' ? 'Wine Concierge' : nombreTienda(topPromo[0])} publica precio anterior en el ${topPromo[2]}% de sus productos (${topPromo[1]} de ${totales[topPromo[0]]}). En total, ${ps.filter((p) => p.precioLista).length} de ${ps.length} productos muestran oferta declarada. Un precio tachado es una afirmación de la tienda, no una verificación del ahorro real.`
+        : 'Ninguna tienda muestra precio anterior publicado en la lectura de hoy.',
+    },
+    {
+      h: `Segmento de S/ 1,000 o más: ${ps.filter((p) => p.precio >= 1000).length} productos`,
+      p: altosTop.length
+        ? `Concentración por tienda: ${altosTop.slice(0, 4).map(([t, n]) => `${nombreTienda(t)} ${n}`).join(' · ')}. Wine Concierge aporta ${nAltosPropia} de ellos. Cifras de conteo sobre precios observados, sin ajuste por formato o añada.`
+        : 'Ningún producto de la lectura llega a S/ 1,000.',
+    },
+    {
+      h: `Envío: ${gratis.length} de ${DATOS.envios.length} declaran envío gratis`,
+      p: `${gratis.map((e) => `${e.nombre} (${e.gratisDesde})`).join(' · ')}. ${sinCosto.length} tienda(s) no publican el costo en Lima (${sinCosto.map((e) => e.nombre).join(', ')}), por lo que ese punto no es comparable hasta que se cotice en su checkout.`,
+    },
+  ];
+  if (DATOS.resumen.convertidosUSD) {
+    items.push({
+      h: `${DATOS.resumen.convertidosUSD} precios llegan en USD`,
+      p: `Wine Not Store publica en dólares; estos precios se convierten a soles con tasa ${DATOS.fx.usdAPen} (${DATOS.fx.fuente}, obtenida el ${fFechaCorta(DATOS.fx.obtenidoEn)}). El precio publicado en su web queda visible en la columna “Publicado”. El tipo de cambio varía: una conversión es una estimación del panel, no un precio de la tienda.`,
+    });
+  }
+  $('#lecturas-grid').innerHTML = items.map((i) => `<article class="lectura"><h3>${i.h}</h3><p>${i.p}</p><span class="calc">Cálculo propio sobre datos observados · lectura ${fFechaCorta(DATOS.generadoEn)}</span></article>`).join('');
+}
+
+function renderMetodologia() {
+  $('#dlg-leido').textContent = `Lectura automática del ${fFecha(DATOS.generadoEn)} (hora de Lima), duración ${Math.round((DATOS.duracionMs || 0) / 1000)} s. Cada fuente se consulta por su API pública o por el HTML de su categoría de mayor segmento.`;
+  $('#dlg-fuentes').innerHTML = DATOS.fuentes.map((f) => {
+    const badge = f.estado === 'ok' ? '<span class="badge ok">OK</span>' : (f.estado === 'error' ? '<span class="badge err">Error · datos anteriores</span>' : '<span class="badge warn">Sin catálogo</span>');
+    return `<li><b>${escapeHtml(f.nombre)}</b> · ${escapeHtml(f.plataforma)} ${badge}
+      <div style="font-size:12px;color:var(--muted);margin-top:5px">
+        Segmento leído: ${escapeHtml(f.categoria || '—')} · Fuente de datos: <code>${escapeHtml(f.fuenteDato || '—')}</code> ·
+        ${f.productos} producto(s) · lectura ${fFecha(f.leidoEn)}${f.datosDe ? ' · conservando datos del ' + fFechaCorta(f.datosDe) : ''}${f.error ? ' · error: ' + escapeHtml(f.error) : ''}
+        ${f.nota ? '<br>' + escapeHtml(f.nota) : ''}
+        <br><a href="${f.url}" target="_blank" rel="noopener">${f.url} ↗</a>
+      </div></li>`;
+  }).join('');
+  $('#dlg-fx').innerHTML = DATOS.fx.ok
+    ? `Tipo de cambio aplicado: <b>1 USD = ${DATOS.fx.usdAPen} PEN</b>, fuente ${escapeHtml(DATOS.fx.fuente)}, obtenido el ${fFecha(DATOS.fx.obtenidoEn)}. Solo se usa para la tienda que publica en USD; el precio original en dólares permanece en la tabla.`
+    : (DATOS.fx.usdAPen
+      ? `Sin tipo de cambio nuevo (${escapeHtml(DATOS.fx.advertencia || '')}). Se mantiene la última tasa conocida: 1 USD = ${DATOS.fx.usdAPen} PEN.`
+      : `No hay tipo de cambio disponible (${escapeHtml(DATOS.fx.advertencia || '')}); los precios en USD quedan sin convertir y se excluyen de los cálculos en soles.`);
+
+  const limitaciones = [
+    '<b>Madero Market</b> no publica precios en su web (su portada no contiene montos en soles): la fuente se lee y se reporta como “sin catálogo de precios”, con 0 productos.',
+    '<b>La Viniteca</b> no expone API pública: sus precios se leen del HTML de la categoría premium y la disponibilidad no aparece en el listado (se muestra “no publicado”).',
+    '<b>Segmento premium según cada tienda:</b> Wine Concierge (vinos y espumantes, excluye destilados), Wine Not Store (todo el catálogo de vino), Perufarma (VINOS PREMIUM), Licorerías Unidas (vino de lujo), La Viniteca (premium), Panuts (Alta Gama). No son categorías equivalentes entre sí.',
+    'Las lecturas son instantáneos diarios: precio, stock y promociones pueden cambiar varias veces al día en la web de origen.',
+    'La política de envío se transcribe de una página pública y solo se revalida su disponibilidad; no se cotiza el checkout, donde algunas tiendas calculan el costo final.',
+    'No se emparejan productos idénticos entre tiendas: las comparaciones son a nivel de catálogo, no de botella contra botella.',
+  ];
+  $('#dlg-limitaciones').innerHTML = limitaciones.map((l) => `<li>${l}</li>`).join('');
+}
+
+function poblarTiendas() {
+  const ids = [...new Set(DATOS.productos.map((p) => p.tienda))];
+  const opciones = ['<option value="todas">Todas las tiendas</option>']
+    .concat(ids.map((id) => `<option value="${id}">${escapeHtml(nombreTienda(id))}</option>`));
+  $('#f-tienda').innerHTML = opciones.join('');
+}
+
+function filtrar() {
+  const q = norm(F.q);
+  let out = DATOS.productos.filter((p) => {
+    if (F.tienda !== 'todas' && p.tienda !== F.tienda) return false;
+    if (F.disponible && p.disponible !== true) return false;
+    if (F.tramo !== 'todas') {
+      const t = TRAMOS.find((t) => t.id === F.tramo);
+      if (t && !(p.precio >= t.min && p.precio < t.max)) return false;
+    }
+    if (q && !(norm(p.nombre).includes(q) || norm(p.marca).includes(q))) return false;
+    return true;
+  });
+  const ord = {
+    'precio-desc': (a, b) => b.precio - a.precio,
+    'precio-asc': (a, b) => a.precio - b.precio,
+    tienda: (a, b) => nombreTienda(a.tienda).localeCompare(nombreTienda(b.tienda), 'es') || b.precio - a.precio,
+    nombre: (a, b) => a.nombre.localeCompare(b.nombre, 'es'),
+  }[F.orden];
+  return out.sort(ord);
+}
+
+function pintarTabla() {
+  const filas = FILA.slice(0, VISIBLES);
+  $('#tabla-body').innerHTML = filas.map((p) => {
+    const t = nombreTienda(p.tienda);
+    const estado = p.disponible === true ? '<span class="badge ok">Disponible</span>'
+      : p.disponible === false ? '<span class="badge err">Agotado</span>'
+        : '<span class="badge">No publicado</span>';
+    const publicado = p.convertido
+      ? `US$ ${FORMATO.format(p.precioOriginal)}<span class="precio-conv">convertido a ${sSoles(p.precio)}</span>`
+      : (p.precioLista ? sSoles(p.precioLista) : '—');
+    return `<tr>
+      <td data-label="Tienda">${escapeHtml(t)}</td>
+      <td data-label="Producto"><div class="prod">${p.imagen ? `<img class="thumb" src="${p.imagen}" alt="" loading="lazy" decoding="async">` : ''}<div><div class="p-nombre">${escapeHtml(p.nombre)}</div><div class="p-marca">${escapeHtml(p.marca || p.categoria || '')}</div></div></div></td>
+      <td data-label="Precio" class="num"><b>${sSoles(p.precio)}</b></td>
+      <td data-label="Publicado" class="num">${publicado}</td>
+      <td data-label="Estado">${estado}</td>
+      <td data-label="Fuente">${p.url ? `<a href="${p.url}" target="_blank" rel="noopener">Ver ficha ↗</a>` : '—'}</td>
+    </tr>`;
+  }).join('');
+  $('#conteo').textContent = `Mostrando ${Math.min(VISIBLES, FILA.length)} de ${FILA.length} productos (de ${DATOS.productos.length} leídos)`;
+  $('#btn-mas').hidden = VISIBLES >= FILA.length;
+}
+
+function aplicarFiltros() {
+  FILA = filtrar();
+  VISIBLES = 50;
+  pintarTabla();
+}
+
+function csv() {
+  const sep = ';';
+  const esc = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const cab = ['Tienda', 'Producto', 'Marca', 'Precio PEN', 'Precio publicado', 'Moneda original', 'Disponible', 'Segmento', 'URL', 'Lectura'];
+  const lineas = [cab.map(esc).join(sep)];
+  filtrar().forEach((p) => {
+    lineas.push([
+      nombreTienda(p.tienda), p.nombre, p.marca || '', p.precio.toFixed(2),
+      p.convertido ? p.precioOriginal.toFixed(2) : (p.precioLista ? p.precioLista.toFixed(2) : ''),
+      p.convertido ? 'USD' : 'PEN',
+      p.disponible === true ? 'Sí' : p.disponible === false ? 'No' : 'No publicado',
+      p.categoria || '', p.url || '', DATOS.generadoEn,
+    ].map(esc).join(sep));
+  });
+  const blob = new Blob(['\ufeff' + lineas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'precios-competencia-' + DATOS.generadoEn.slice(0, 10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+$('#f-buscar').addEventListener('input', (e) => { F.q = e.target.value; aplicarFiltros(); });
+$('#f-tienda').addEventListener('change', (e) => { F.tienda = e.target.value; aplicarFiltros(); });
+$('#f-tramo').addEventListener('change', (e) => { F.tramo = e.target.value; aplicarFiltros(); });
+$('#f-orden').addEventListener('change', (e) => { F.orden = e.target.value; aplicarFiltros(); });
+$('#f-disponible').addEventListener('change', (e) => { F.disponible = e.target.checked; aplicarFiltros(); });
+$('#btn-mas').addEventListener('click', () => { VISIBLES += 50; pintarTabla(); });
+$('#btn-csv').addEventListener('click', csv);
+const dlg = $('#dlg-metodologia');
+const abrirDlg = () => (dlg.showModal ? dlg.showModal() : (dlg.open = true));
+$('#btn-metodologia').addEventListener('click', abrirDlg);
+$('#btn-metodologia-top').addEventListener('click', abrirDlg);
+$('#btn-cerrar').addEventListener('click', () => dlg.close());
+dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+
+cargar();
+</script>
+</body>
+</html>

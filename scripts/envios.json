@@ -1,0 +1,75 @@
+{
+  "comentario": "Políticas de envío observadas manualmente en las URLs indicadas. El script diario solo revalida que la fuente siga accesible y avisa si el contenido cambió; no reescribe estos campos.",
+  "envios": [
+    {
+      "tienda": "wineconcierge",
+      "nombre": "Wine Concierge",
+      "costoLima": "Se calcula en el checkout (monto no publicado)",
+      "gratisDesde": "No publicado",
+      "tiempo": "Hasta 48 h hábiles · Lima Metropolitana y Callao",
+      "fuente": "https://www.wineconcierge.pe/terminos-y-condiciones",
+      "cita": "Los pedidos se entregan en el plazo de hasta 48 horas hábiles para Lima Metropolitana.",
+      "observadoEn": "2026-10-07"
+    },
+    {
+      "tienda": "winenotstore",
+      "nombre": "Wine Not Store",
+      "costoLima": "Gratis (flete incluido en el precio)",
+      "gratisDesde": "Siempre · pedido múltiplo de 6 botellas",
+      "tiempo": "≈ 2 semanas desde el despacho",
+      "fuente": "https://winenotstore.com/en/pages/preguntas-frecuentes",
+      "cita": "El valor del flete está incluido. Aplica a todos los países. El envío mínimo es de 6 botellas de 750cc.",
+      "observadoEn": "2026-10-07"
+    },
+    {
+      "tienda": "perufarma",
+      "nombre": "Perufarma",
+      "costoLima": "No publicado por debajo de S/ 85",
+      "gratisDesde": "S/ 85",
+      "tiempo": "No publicado · 1 intento de entrega",
+      "fuente": "https://perufarma.com.pe/",
+      "cita": "COMPRA MÍNIMA DE S/ 85, INCLUYE DELIVERY GRATIS",
+      "observadoEn": "2026-10-07"
+    },
+    {
+      "tienda": "licoreriasunidas",
+      "nombre": "Licorerías Unidas",
+      "costoLima": "S/ 10 por debajo de S/ 300",
+      "gratisDesde": "S/ 300",
+      "tiempo": "24 h en zona metropolitana · express mismo día + S/ 10",
+      "fuente": "https://licoreriasunidas.pe/policies/shipping-policy",
+      "cita": "Menos de S/300 → S/10.00 → Tarifa estándar. Zona Metropolitana: Todo pedido tendrá un plazo máximo de entrega de 24 horas.",
+      "observadoEn": "2026-10-07"
+    },
+    {
+      "tienda": "viniteca",
+      "nombre": "La Viniteca",
+      "costoLima": "No publicado",
+      "gratisDesde": "No publicado",
+      "tiempo": "24–48 h en Lima",
+      "fuente": "https://viniteca.com.pe/content/1-delivery",
+      "cita": "Las entregas se realizarán en un lapso de 24 - 48 horas a partir de que se realiza un pedido (Lima).",
+      "observadoEn": "2026-10-07"
+    },
+    {
+      "tienda": "panuts",
+      "nombre": "Panuts",
+      "costoLima": "S/ 12 · Lima Metropolitana y playas del sur",
+      "gratisDesde": "No publicado",
+      "tiempo": "Siguiente día (pedidos antes de 1 pm) · 90 min express en 5 distritos",
+      "fuente": "https://panuts.com/politica-de-entregas-y-devoluciones/",
+      "cita": "El costo de envío es de S/ 12 y se factura al momento de realizar el checkout. Válido para Lima Metropolitana y playas del sur.",
+      "observadoEn": "2026-10-07"
+    },
+    {
+      "tienda": "maderomarket",
+      "nombre": "Madero Market",
+      "costoLima": "No observado",
+      "gratisDesde": "No observado",
+      "tiempo": "No observado",
+      "fuente": "https://www.maderomarket.pe/servicios.html",
+      "cita": "Rutas habituales de política de envío (/envios, /pages/envios, /policies/shipping-policy) devolvieron 404; la página de servicios no publica costo ni plazos.",
+      "observadoEn": "2026-10-07"
+    }
+  ]
+}
