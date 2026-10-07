@@ -21,7 +21,7 @@ node scripts/actualizar.mjs
 git add data.json && git commit -m "Lectura diaria" && git push
 ```
 
-El script consulta 7 fuentes (VTEX, Shopify, WooCommerce, PrestaShop y HTML), convierte USD→PEN con tipo de cambio vivo y, si una web falla, conserva su última lectura buena marcándola como error.
+El script consulta 7 fuentes (VTEX, Shopify, WooCommerce, PrestaShop y HTML). Solo Wine Not Store publica en dólares; sus precios se convierten a soles con tipo de cambio vivo. El resto de tiendas (incluida Licorerías Unidas) publica en soles y no se convierte. Si una web falla, se conserva su última lectura buena marcándola como error.
 
 ## Fuentes y cobertura
 

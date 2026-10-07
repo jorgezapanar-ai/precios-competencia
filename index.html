@@ -24,7 +24,7 @@ h2{font-size:38px;margin:13px 0 8px}
 .chip{background:var(--cream);border:1px solid var(--line);padding:8px 13px;font-size:12px;color:#4c463d}
 .chip b{color:var(--ink)}
 section{margin-top:64px}
-.grid-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.grid-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .panel{background:#fbf9f4;border:1px solid var(--line);padding:22px;min-width:0}
 .panel .k-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
 .panel .k-value{font:34px Georgia,serif;margin:8px 0 4px;letter-spacing:-.03em;word-break:break-word}
@@ -38,7 +38,7 @@ section{margin-top:64px}
 .range-row{display:grid;grid-template-columns:170px minmax(0,1fr) 250px;gap:18px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}
 .range-name{font-size:13px;font-weight:600}
 .range-name .rol{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-deep);font-weight:600}
-.range-track{position:relative;height:26px;background:var(--cream);border:1px solid var(--line);min-width:0}
+.range-track{position:relative;height:26px;background:var(--cream);border:1px solid var(--line);min-width:0;overflow:hidden}
 .range-fill{position:absolute;top:0;bottom:0;background:#c9b48d}
 .range-fill.propia{background:var(--ink)}
 .range-median{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--error)}
@@ -52,7 +52,7 @@ section{margin-top:64px}
 .tramo-bar{display:flex;height:30px;border:1px solid var(--line);overflow:hidden;min-width:0}
 .tramo-seg{display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;min-width:0;overflow:hidden;white-space:nowrap}
 /* tablas */
-.table-wrap{overflow-x:auto;border:1px solid var(--line);background:#fbf9f4;margin-top:22px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);background:#fbf9f4;margin-top:22px;max-height:72vh;overscroll-behavior:contain}
 table{border-collapse:collapse;width:100%;font-size:13px}
 caption{text-align:left;padding:0;font-size:0;height:0;overflow:hidden}
 th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
@@ -104,6 +104,8 @@ ul.fuentes li b{font-family:Georgia,serif;font-size:15px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .cargando{padding:60px 0;text-align:center;color:var(--muted);font:19px Georgia,serif}
 :focus-visible{outline:3px solid #a68b5d;outline-offset:3px}
+@media(max-width:640px){.grid-kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:400px){.grid-kpis{grid-template-columns:1fr}}
 @media(max-width:900px){
   .range-row{grid-template-columns:1fr;gap:8px}
   .range-vals{text-align:left}
@@ -209,7 +211,7 @@ ul.fuentes li b{font-family:Georgia,serif;font-size:15px}
         <p class="eyebrow">Detalle</p>
         <h2 id="h-catalogo">Catálogo comparado</h2>
       </div>
-      <p>Cada fila es un producto tal como lo publica su tienda, con el enlace a la ficha de origen para verificarlo. La columna “Publicado” muestra el precio tal cual aparece en la web (incluye la moneda original si no es soles).</p>
+      <p>Cada fila es un producto tal como lo publica su tienda, con el enlace a la ficha de origen para verificarlo. “Precio (S/)” expresa todo en soles (con la tasa del día cuando la tienda publica en otra moneda); “Publicado” es el precio en la moneda original de la web y “Precio anterior” el precio tachado que la tienda muestra como oferta.</p>
     </div>
 
     <div class="controles">
@@ -261,7 +263,8 @@ ul.fuentes li b{font-family:Georgia,serif;font-size:15px}
             <th scope="col">Tienda</th>
             <th scope="col">Producto</th>
             <th scope="col" class="num">Precio (S/)</th>
-            <th scope="col" class="num">Publicado</th>
+            <th scope="col">Publicado</th>
+            <th scope="col" class="num">Precio anterior</th>
             <th scope="col">Estado</th>
             <th scope="col">Fuente</th>
           </tr>
@@ -323,10 +326,10 @@ const fFecha = (iso) => new Date(iso).toLocaleString('es-PE', { timeZone: 'Ameri
 const fFechaCorta = (iso) => new Date(iso).toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'short', year: 'numeric' });
 
 const TRAMOS = [
-  { id: '0-100', etq: '< S/ 100', min: 0, max: 100, color: '#8d7047' },
-  { id: '100-300', etq: 'S/ 100–299', min: 100, max: 300, color: '#a98b5e' },
-  { id: '300-600', etq: 'S/ 300–599', min: 300, max: 600, color: '#c2a678' },
-  { id: '600-1000', etq: 'S/ 600–999', min: 600, max: 1000, color: '#5c564c' },
+  { id: '0-100', etq: '< S/ 100', min: 0, max: 100, color: '#6b4a2b' },
+  { id: '100-300', etq: 'S/ 100–299', min: 100, max: 300, color: '#7a5c38' },
+  { id: '300-600', etq: 'S/ 300–599', min: 300, max: 600, color: '#5c564c' },
+  { id: '600-1000', etq: 'S/ 600–999', min: 600, max: 1000, color: '#3f3b34' },
   { id: '1000-max', etq: 'S/ 1,000 o más', min: 1000, max: Infinity, color: '#1d1d1b' },
 ];
 
@@ -358,7 +361,7 @@ async function cargar() {
     pintarTodo();
   } catch (e) {
     $('#meta-strip').innerHTML = '<span class="chip" style="border-color:#d8a9a4;background:#f7e8e6;color:#993e37"><b>No se pudo leer data.json.</b> ' + escapeHtml(e.message) + '. Abre el panel por un servidor web local o vuelve a intentarlo.</span>';
-    $('#kpis-grid').innerHTML = '<div class="panel error-panel"><div class="k-label">Sin datos</div><div class="k-value">—</div><div class="k-note">El archivo data.json aún no existe o no es accesible. Se genera con <code>node scripts/actualizar.mjs</code>.</div></div>';
+    $('#kpis-grid').innerHTML = '<div class="panel error-panel"><div class="k-label">Sin datos</div><div class="k-value">—</div><div class="k-note">El archivo data.json aún no existe o no es accesible. Se genera con <code>node scripts/actualizar.mjs</code>.</div><button type="button" class="button" id="btn-reintentar" style="margin-top:14px">Reintentar</button></div>';
     $('#btn-reintentar')?.addEventListener('click', cargar);
   }
 }
@@ -399,10 +402,10 @@ function renderKpis() {
   const gratisPublicado = DATOS.envios.filter((e) => !/^No (publicado|observado)/.test(e.gratisDesde)).length;
   const cards = [
     { l: 'Productos con precio', v: ps.length.toLocaleString('es-PE'), n: `Catálogo leído en ${tiendasConCat} tiendas · lectura del ${fFechaCorta(DATOS.generadoEn)}` },
-    { l: 'Mediana de precios', v: sSoles(med), n: 'Valor que deja la mitad del catálogo por debajo. Cálculo propio sobre los precios observados.' },
-    { l: 'Rango mínimo – máximo', v: `${sSolesCorto(min)} – ${sSolesCorto(max)}`, n: 'Extremos de todo el catálogo leído, incluye destilados y magnums.' },
+    { l: 'Mediana de precios', v: sSoles(med), n: `Valor que deja la mitad del catálogo por debajo. Cálculo propio; incluye ${DATOS.resumen.convertidosUSD} precios convertidos desde USD (estimación con la tasa del día).` },
+    { l: 'Rango mínimo – máximo', v: `${sSolesCorto(min)} – ${sSolesCorto(max)}`, n: 'Extremos de todo el catálogo leído, incluye formatos grandes (magnums).' },
     { l: 'Con precio publicado tachado', v: `${conDesc} · ${Math.round((conDesc / ps.length) * 100)}%`, n: 'Producto con precio anterior visible en la web (oferta declarada por la tienda).' },
-    { l: 'Fuentes leídas hoy', v: `${DATOS.resumen.fuentesOk} / ${DATOS.resumen.fuentesTotal}`, n: 'Si una web falla, se conserva su última lectura buena y se marca como error.' },
+    { l: 'Fuentes leídas hoy', v: `${DATOS.resumen.fuentesOk} / ${DATOS.resumen.fuentesTotal}`, n: `Catálogo leído en ${tiendasConCat} de ${DATOS.resumen.fuentesTotal} tiendas; ${DATOS.resumen.fuentesTotal - tiendasConCat} sin catálogo de precios publicado. Si una web falla, se conserva su última lectura buena y se marca como error.` },
     { l: 'Envío gratis publicado', v: `${gratisPublicado} de ${DATOS.envios.length}`, n: 'Tiendas que declaran un monto mínimo o envío incluido en su política (ver tabla de envíos).' },
   ];
   $('#kpis-grid').innerHTML = cards.map((c) => `<div class="panel"><div class="k-label">${c.l}</div><div class="k-value">${c.v}</div><div class="k-note">${c.n}</div></div>`).join('');
@@ -420,7 +423,7 @@ function renderRangos() {
     med: mediana(vals),
     n: vals.length,
     propia: DATOS.fuentes.find((f) => f.id === tienda)?.rol === 'propia',
-  })).sort((a, b) => b.med - a.med);
+  })).sort((a, b) => nombreTienda(a.tienda).localeCompare(nombreTienda(b.tienda), 'es'));
 
   $('#range-list').innerHTML = filas.map((f) => {
     const izq = Math.min(100, (f.min / tope) * 100);
@@ -443,15 +446,19 @@ function renderTramos() {
   $('#tramo-legend').innerHTML = TRAMOS.map((t) => `<span><i class="sw" style="background:${t.color}"></i>${t.etq}</span>`).join('');
   const grupos = {};
   DATOS.productos.forEach((p) => (grupos[p.tienda] ||= []).push(p.precio));
-  const filas = Object.entries(grupos).sort((a, b) => b[1].length - a[1].length);
+  const filas = Object.entries(grupos).sort((a, b) => nombreTienda(a[0]).localeCompare(nombreTienda(b[0]), 'es'));
   $('#tramo-list').innerHTML = filas.map(([tienda, vals]) => {
     const segs = TRAMOS.map((t) => {
       const n = vals.filter((v) => v >= t.min && v < t.max).length;
       const pct = (n / vals.length) * 100;
       if (!n) return '';
-      return `<div class="tramo-seg" style="width:${pct}%;background:${t.color}" title="${t.etq}: ${n} productos (${Math.round(pct)}%)">${pct >= 9 ? Math.round(pct) + '%' : ''}</div>`;
+      return `<div class="tramo-seg" aria-hidden="true" style="width:${pct}%;background:${t.color}" title="${t.etq}: ${n} productos (${Math.round(pct)}%)">${pct >= 9 ? Math.round(pct) + '%' : ''}</div>`;
     }).join('');
-    return `<div class="tramo-row"><div class="range-name">${escapeHtml(nombreTienda(tienda))}<span class="rol" style="color:var(--muted)">${vals.length} productos</span></div><div class="tramo-bar">${segs}</div></div>`;
+    const resumen = TRAMOS.map((t) => {
+      const n = vals.filter((v) => v >= t.min && v < t.max).length;
+      return n ? `${t.etq}: ${n} (${Math.round((n / vals.length) * 100)}%)` : '';
+    }).filter(Boolean).join('; ');
+    return `<div class="tramo-row"><div class="range-name">${escapeHtml(nombreTienda(tienda))}<span class="rol" style="color:var(--muted)">${vals.length} productos</span></div><div class="tramo-bar" role="img" aria-label="${escapeHtml(nombreTienda(tienda))}: ${escapeHtml(resumen)}">${segs}</div></div>`;
   }).join('');
 }
 
@@ -497,11 +504,11 @@ function renderLecturas() {
   const nAltosPropia = altos['wineconcierge'] || 0;
 
   const gratis = DATOS.envios.filter((e) => !/^No (publicado|observado)/.test(e.gratisDesde));
-  const sinCosto = DATOS.envios.filter((e) => /^No (publicado|observado)/.test(e.costoLima));
+  const sinCosto = DATOS.envios.filter((e) => /no (publicado|observado)|se calcula|por cotizar|no publica/i.test(e.costoLima));
 
   const items = [
     {
-      h: dif == null ? 'Sin base para comparar' : (dif >= 0 ? `Nuestra mediana está ${Math.abs(dif)}% arriba` : `Nuestra mediana está ${Math.abs(dif)}% abajo`),
+      h: dif == null ? 'Sin base para comparar' : (dif >= 0 ? `Nuestra mediana está ${Math.abs(dif)}% arriba del resto de tiendas` : `Nuestra mediana está ${Math.abs(dif)}% abajo del resto de tiendas`),
       p: dif == null
         ? 'No hay suficientes precios en la lectura de hoy para calcular la diferencia.'
         : `Wine Concierge publica su catálogo con mediana ${sSoles(medPropia)} frente a ${sSoles(medResto)} del resto de tiendas combinadas (${ps.length - propia.length} productos). La comparación usa precios publicados; no empareja productos iguales.`,
@@ -526,7 +533,9 @@ function renderLecturas() {
   if (DATOS.resumen.convertidosUSD) {
     items.push({
       h: `${DATOS.resumen.convertidosUSD} precios llegan en USD`,
-      p: `Wine Not Store publica en dólares; estos precios se convierten a soles con tasa ${DATOS.fx.usdAPen} (${DATOS.fx.fuente}, obtenida el ${fFechaCorta(DATOS.fx.obtenidoEn)}). El precio publicado en su web queda visible en la columna “Publicado”. El tipo de cambio varía: una conversión es una estimación del panel, no un precio de la tienda.`,
+      p: DATOS.resumen.convertidosUSD
+        ? `${nombreTienda('winenotstore')} publica en dólares; esos ${DATOS.resumen.convertidosUSD} precios se convierten a soles con tasa ${DATOS.fx.usdAPen.toFixed(4)} (${DATOS.fx.fuente}, obtenida el ${fFechaCorta(DATOS.fx.obtenidoEn)}). El precio publicado en su web queda visible en la columna “Publicado”. El tipo de cambio varía: una conversión es una estimación del panel, no un precio de la tienda.`
+        : (DATOS.fx.usdAPen ? `Este corte no incluyó precios en dólares; la tasa de referencia quedó en ${DATOS.fx.usdAPen.toFixed(4)} (${DATOS.fx.fuente}).` : 'Este corte no incluyó precios en dólares.'),
     });
   }
   $('#lecturas-grid').innerHTML = items.map((i) => `<article class="lectura"><h3>${i.h}</h3><p>${i.p}</p><span class="calc">Cálculo propio sobre datos observados · lectura ${fFechaCorta(DATOS.generadoEn)}</span></article>`).join('');
@@ -535,7 +544,13 @@ function renderLecturas() {
 function renderMetodologia() {
   $('#dlg-leido').textContent = `Lectura automática del ${fFecha(DATOS.generadoEn)} (hora de Lima), duración ${Math.round((DATOS.duracionMs || 0) / 1000)} s. Cada fuente se consulta por su API pública o por el HTML de su categoría de mayor segmento.`;
   $('#dlg-fuentes').innerHTML = DATOS.fuentes.map((f) => {
-    const badge = f.estado === 'ok' ? '<span class="badge ok">OK</span>' : (f.estado === 'error' ? '<span class="badge err">Error · datos anteriores</span>' : '<span class="badge warn">Sin catálogo</span>');
+    const badge = f.estado === 'ok' && f.productos > 0
+      ? '<span class="badge ok">OK</span>'
+      : f.estado === 'ok'
+        ? '<span class="badge warn">Sin catálogo de precios</span>'
+        : f.estado === 'error'
+          ? '<span class="badge err">Error · datos anteriores</span>'
+          : '<span class="badge warn">Sin catálogo</span>';
     return `<li><b>${escapeHtml(f.nombre)}</b> · ${escapeHtml(f.plataforma)} ${badge}
       <div style="font-size:12px;color:var(--muted);margin-top:5px">
         Segmento leído: ${escapeHtml(f.categoria || '—')} · Fuente de datos: <code>${escapeHtml(f.fuenteDato || '—')}</code> ·
@@ -591,19 +606,32 @@ function filtrar() {
 
 function pintarTabla() {
   const filas = FILA.slice(0, VISIBLES);
+  if (!FILA.length) {
+    $('#tabla-body').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:34px;color:var(--muted)">Ningún producto coincide con los filtros. <button type="button" class="button secundario" id="btn-limpiar">Limpiar filtros</button></td></tr>';
+    $('#conteo').textContent = `0 productos coinciden (de ${DATOS.productos.length} leídos)`;
+    $('#btn-mas').hidden = true;
+    document.getElementById('btn-limpiar').addEventListener('click', () => {
+      F.q = ''; F.tienda = 'todas'; F.tramo = 'todas'; F.orden = 'precio-desc'; F.disponible = false;
+      $('#f-buscar').value = ''; $('#f-tienda').value = 'todas'; $('#f-tramo').value = 'todas'; $('#f-orden').value = 'precio-desc'; $('#f-disponible').checked = false;
+      aplicarFiltros();
+    });
+    return;
+  }
   $('#tabla-body').innerHTML = filas.map((p) => {
     const t = nombreTienda(p.tienda);
     const estado = p.disponible === true ? '<span class="badge ok">Disponible</span>'
       : p.disponible === false ? '<span class="badge err">Agotado</span>'
         : '<span class="badge">No publicado</span>';
     const publicado = p.convertido
-      ? `US$ ${FORMATO.format(p.precioOriginal)}<span class="precio-conv">convertido a ${sSoles(p.precio)}</span>`
-      : (p.precioLista ? sSoles(p.precioLista) : '—');
+      ? `US$ ${FORMATO.format(p.precioOriginal)}<span class="precio-conv">publicado en dólares</span>`
+      : `${p.moneda === 'USD' ? 'US$' : 'S/'} ${FORMATO.format(p.precio)}`;
+    const anterior = p.precioLista ? sSoles(p.precioLista) : '—';
     return `<tr>
       <td data-label="Tienda">${escapeHtml(t)}</td>
       <td data-label="Producto"><div class="prod">${p.imagen ? `<img class="thumb" src="${p.imagen}" alt="" loading="lazy" decoding="async">` : ''}<div><div class="p-nombre">${escapeHtml(p.nombre)}</div><div class="p-marca">${escapeHtml(p.marca || p.categoria || '')}</div></div></div></td>
-      <td data-label="Precio" class="num"><b>${sSoles(p.precio)}</b></td>
+      <td data-label="Precio (S/)" class="num"><b>${p.convertido ? '≈ ' : ''}${sSoles(p.precio)}</b></td>
       <td data-label="Publicado" class="num">${publicado}</td>
+      <td data-label="Precio anterior" class="num">${anterior}</td>
       <td data-label="Estado">${estado}</td>
       <td data-label="Fuente">${p.url ? `<a href="${p.url}" target="_blank" rel="noopener">Ver ficha ↗</a>` : '—'}</td>
     </tr>`;
@@ -621,13 +649,13 @@ function aplicarFiltros() {
 function csv() {
   const sep = ';';
   const esc = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
-  const cab = ['Tienda', 'Producto', 'Marca', 'Precio PEN', 'Precio publicado', 'Moneda original', 'Disponible', 'Segmento', 'URL', 'Lectura'];
+  const cab = ['Tienda', 'Producto', 'Marca', 'Precio PEN', 'Publicado', 'Precio anterior PEN', 'Disponible', 'Segmento', 'URL', 'Lectura'];
   const lineas = [cab.map(esc).join(sep)];
   filtrar().forEach((p) => {
     lineas.push([
       nombreTienda(p.tienda), p.nombre, p.marca || '', p.precio.toFixed(2),
-      p.convertido ? p.precioOriginal.toFixed(2) : (p.precioLista ? p.precioLista.toFixed(2) : ''),
-      p.convertido ? 'USD' : 'PEN',
+      p.convertido ? `US$${p.precioOriginal.toFixed(2)}` : (p.moneda === 'USD' ? `US$${p.precio.toFixed(2)}` : `S/${p.precio.toFixed(2)}`),
+      p.precioLista ? p.precioLista.toFixed(2) : '',
       p.disponible === true ? 'Sí' : p.disponible === false ? 'No' : 'No publicado',
       p.categoria || '', p.url || '', DATOS.generadoEn,
     ].map(esc).join(sep));

@@ -115,7 +115,7 @@ async function vtexWineConcierge() {
   return { productos, meta: { categoria: 'Vinos y espumantes (excluye destilados)', fuente: 'api/catalog_system/pub/products/search' } };
 }
 
-function shopifyAdapter({ tienda, base, coleccion, filtrar }) {
+function shopifyAdapter({ tienda, base, coleccion, filtrar, moneda }) {
   return async () => {
     const productos = [];
     for (let pagina = 1; pagina <= 6; pagina++) {
@@ -133,7 +133,7 @@ function shopifyAdapter({ tienda, base, coleccion, filtrar }) {
           nombre: p.title,
           marca: p.vendor,
           precio: v.price,
-          moneda: 'USD',
+          moneda: moneda || 'USD',
           precioLista: v.compare_at_price,
           disponible: typeof v.available === 'boolean' ? v.available : null,
           url: `${base}/en/products/${p.handle}`,
@@ -234,12 +234,12 @@ const FUENTES = [
   {
     id: 'winenotstore', nombre: 'Wine Not Store', rol: 'competencia', url: 'https://winenotstore.com/', plataforma: 'Shopify',
     correr: shopifyAdapter({
-      tienda: 'winenotstore', base: 'https://winenotstore.com', coleccion: null,
+      tienda: 'winenotstore', base: 'https://winenotstore.com', coleccion: null, moneda: 'USD',
       filtrar: (p) => ['Vino', 'Vino Espumante'].includes(p.product_type) && !/^test/i.test(p.handle || ''),
     }),
   },
   { id: 'perufarma', nombre: 'Perufarma', rol: 'competencia', url: 'https://perufarma.com.pe/', plataforma: 'WooCommerce', ua: UA_EDGE, correr: wooAdapter({ tienda: 'perufarma', base: 'https://perufarma.com.pe', categoriaId: 783, categoriaNombre: 'VINOS PREMIUM' }) },
-  { id: 'licoreriasunidas', nombre: 'Licorerías Unidas', rol: 'competencia', url: 'https://licoreriasunidas.pe/', plataforma: 'Shopify', correr: shopifyAdapter({ tienda: 'licoreriasunidas', base: 'https://licoreriasunidas.pe', coleccion: 'vino-de-lujo' }) },
+  { id: 'licoreriasunidas', nombre: 'Licorerías Unidas', rol: 'competencia', url: 'https://licoreriasunidas.pe/', plataforma: 'Shopify', correr: shopifyAdapter({ tienda: 'licoreriasunidas', base: 'https://licoreriasunidas.pe', coleccion: 'vino-de-lujo', moneda: 'PEN' }) },
   { id: 'viniteca', nombre: 'La Viniteca', rol: 'competencia', url: 'https://viniteca.com.pe/', plataforma: 'PrestaShop', correr: vinitecaPremium },
   { id: 'panuts', nombre: 'Panuts', rol: 'competencia', url: 'https://panuts.com/', plataforma: 'WooCommerce', correr: wooAdapter({ tienda: 'panuts', base: 'https://panuts.com', categoriaId: 26, categoriaNombre: 'Alta Gama' }) },
   { id: 'maderomarket', nombre: 'Madero Market', rol: 'competencia', url: 'https://www.maderomarket.pe/', plataforma: 'Sitio estático', correr: maderoMarket },
